@@ -2,7 +2,7 @@ import csv
 import pprint
 import numpy as np
 from numpy.fft import fftn, ifftn, fftfreq
-from scipy import signal
+import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt2
 import os
 
@@ -27,36 +27,28 @@ for i in range(4000):
     floatData[0][i]=time
     floatData[1][i]=float(l[i][0])
 
-#plt2.subplot(121)
-#グラフプロット
-plt2.title('FreqTime-Time constant(Tibialis anterior)')
-#前脛骨筋（Tibialis anterior）
-plt2.xlabel('time(s)')
-plt2.ylabel('time constant(us)')
-plt2.plot(floatData[0],floatData[1],marker='None',linewidth = 0.1)
-
 #fft計算
 # 単位時間あたりに, いくつのデータ点が存在しているか.
 sampling_rate = 100
 z=fftn(floatData[1])
 freq = fftfreq(len(floatData[1]), d=1 / sampling_rate)
 
-#fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
-#ax = axes[0]
-#ax.plot(freq[1:int(len(floatData[1]) / 2)], abs(z[1:int(len(floatData[1]) / 2)]))
-#ax.set_yscale('log')
-#ax.set_xlabel('Freq(周波数) Hz')
-#ax.set_ylabel('Power')
+fig, axes = plt.subplots(figsize=(10, 5), ncols=2, sharey=True)
+ax = axes[0]
+ax.plot(freq[1:int(len(floatData[1]) / 2)], abs(z[1:int(len(floatData[1]) / 2)]))
+ax.set_yscale('log')
+ax.set_xlabel('Freq(周波数) Hz',fontname="MS Gothic")
+ax.set_ylabel('Power')
 
 # 周波数 f → 周期 T に直して表示する
 # 周期は fT = 1 を満たすので単に逆数にすれば良い
-#ax = axes[1]
-#ax.plot(1 / freq[1:int(len(floatData[1]) / 2)], abs(z[1:int(len(floatData[1]) / 2)]))
-#ax.set_yscale('log')
-#ax.set_xlabel('T(周期) s')
-#ax.set_xscale('log')
+ax = axes[1]
+ax.plot(1 / freq[1:int(len(floatData[1]) / 2)], abs(z[1:int(len(floatData[1]) / 2)]))
+ax.set_yscale('log')
+ax.set_xlabel('T(周期) s',fontname="MS Gothic")
+ax.set_xscale('log')
 
-#save_fig(fig, name='sample_wave_fft.png')
+save_fig(fig, name='sample_wave_fft.png')
 
 G=z.copy()
 
@@ -73,10 +65,15 @@ g = np.fft.ifft(G)
 
 # 実部の値のみ取り出し
 g = g.real
-#print(g)
-#print(l)
-#plt.subplot(224)
 
+#plt2.subplot(121)
+#グラフプロット
+plt2.title('経過時間-時定数(前脛骨筋)', fontname="MS Gothic")
+#前脛骨筋（Tibialis anterior）
+plt2.xlabel('経過時間(s)', fontname="MS Gothic")
+plt2.ylabel('時定数(us)', fontname="MS Gothic")
+plt2.plot(floatData[0],floatData[1],marker='.',linewidth = 0.1)
 #plt2.subplot(122)
-plt2.plot(floatData[0], g,marker='None',linewidth = 0.1)
+plt2.plot(floatData[0], g,marker='.',linewidth = 0.1)
+plt2.legend(["元データ","ローパス適用後"], prop={"family":"MS Gothic"})
 plt2.show()
