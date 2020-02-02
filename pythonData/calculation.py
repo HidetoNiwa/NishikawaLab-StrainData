@@ -49,10 +49,10 @@ ax.set_xlabel('T(周期) s',fontname="MS Gothic")
 ax.set_xscale('log')
 
 save_fig(fig, name='sample_wave_fft.png')
-
+plt.clf()
 G=z.copy()
 
-fc = 10        # カットオフ周波数
+fc = 5        # カットオフ周波数
 fs = 100     # サンプリング周波数
 fm = (1/2) * fs # アンチエリアジング周波数
 fc_upper = fs - fc # 上側のカットオフ　fc～fc_upperの部分をカット
@@ -72,8 +72,8 @@ plt2.title('経過時間-時定数(前脛骨筋)', fontname="MS Gothic")
 #前脛骨筋（Tibialis anterior）
 plt2.xlabel('経過時間(s)', fontname="MS Gothic")
 plt2.ylabel('時定数(us)', fontname="MS Gothic")
-plt2.plot(floatData[0],floatData[1],marker='.',linewidth = 0.1)
+plt2.plot(floatData[0],floatData[1],marker='*',linewidth = 0.1,markersize=2)
 #plt2.subplot(122)
-plt2.plot(floatData[0], g,marker='.',linewidth = 0.1)
+plt2.plot(floatData[0], g,marker='*',linewidth = 0.1,markersize=2)
 plt2.legend(["元データ","ローパス適用後"], prop={"family":"MS Gothic"})
 plt2.show()
