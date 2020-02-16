@@ -16,7 +16,7 @@ def save_fig(fig, name):
     fig.savefig(p, dpi=120)
 
 #CSVデータ取得
-with open("./testExp/100Hz_ave_前脛骨筋_修理後3M2.csv","r",encoding="UTF-8") as data:
+with open("./testExp/sin1_腓骨筋3-1.csv","r",encoding="UTF-8") as data:
     reader = csv.reader(data)
     l = [row for row in reader]
 
